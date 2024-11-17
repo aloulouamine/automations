@@ -18,7 +18,7 @@ require('dotenv').config();
   const download = await downloadPromise;
   // @todo save to a specific folder
   await download.saveAs(
-    "./data/" + download.suggestedFilename()
+    "./output/" + download.suggestedFilename()
   );
   await page.close()
   await browser.close();
