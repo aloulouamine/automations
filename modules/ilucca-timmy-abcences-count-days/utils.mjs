@@ -1396,8 +1396,6 @@ export const countPresenceDays = (planningHtml) => {
         dataDemand !== "-1" &&
         (title.includes("travail") || title.includes("site"))
       ) {
-        console.log("dataDemand :", dataDemand);
-        console.log("title :", title);
         presenceDaysCount++;
       }
     });
