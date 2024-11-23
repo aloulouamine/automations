@@ -1,8 +1,4 @@
-import {
-  countPresenceDays,
-  getCurrentMonthAndYearFromPlanning,
-  getMonthPresenceDaysMap,
-} from "./utils.mjs";
+import { IluccaPlanning } from "./ilucca-planning.mjs";
 import { test } from "node:test";
 
 const dummyPlannignHtmlTable13DaysPresence = `
@@ -21,45 +17,45 @@ const dummyPlannignHtmlTableWith17Point5Days = `
 
 test("[ilucca presence] should count unfinished month presence", (t) => {
   t.assert.strictEqual(
-    countPresenceDays(dummyPlannignHtmlTable13DaysPresence),
+    new IluccaPlanning(dummyPlannignHtmlTable13DaysPresence).countPresenceDays(),
     13
   );
 });
 
 test("[ilucca presence] should count month full month presence with days off", (t) => {
   t.assert.strictEqual(
-    countPresenceDays(dummyPlannignHtmlTable11DaysPresence),
+    new IluccaPlanning(dummyPlannignHtmlTable11DaysPresence).countPresenceDays(),
     11
   );
 });
 
 test("[ilucca presence] should count month full month presence without days off", (t) => {
   t.assert.strictEqual(
-    countPresenceDays(dummyPlannignHtmlTable22DaysPresence),
+    new IluccaPlanning(dummyPlannignHtmlTable22DaysPresence).countPresenceDays(),
     22
   );
 });
 
 test("[ilucca presence] should count month with half day off", (t) => {
   t.assert.strictEqual(
-    countPresenceDays(dummyPlannignHtmlTableWith17Point5Days),
+    new IluccaPlanning(dummyPlannignHtmlTableWith17Point5Days).countPresenceDays(),
     18.5
   );
 });
 
 test("[ilucca presence] should tell month and year", (t) => {
   t.assert.deepEqual(
-    getCurrentMonthAndYearFromPlanning(dummyPlannignHtmlTable13DaysPresence),
+    new IluccaPlanning(dummyPlannignHtmlTable13DaysPresence).getCurrentMonthAndYearFromPlanning(),
     { monthName: "Novembre", year: 2024, month: 11 }
   );
 
   t.assert.deepEqual(
-    getCurrentMonthAndYearFromPlanning(dummyPlannignHtmlTable11DaysPresence),
+    new IluccaPlanning(dummyPlannignHtmlTable11DaysPresence).getCurrentMonthAndYearFromPlanning(),
     { monthName: "Septembre", year: 2024, month: 9 }
   );
 
   t.assert.deepEqual(
-    getCurrentMonthAndYearFromPlanning(dummyPlannignHtmlTable22DaysPresence),
+    new IluccaPlanning(dummyPlannignHtmlTable22DaysPresence).getCurrentMonthAndYearFromPlanning(),
     { monthName: "Octobre", year: 2024, month: 10 }
   );
 });
@@ -67,7 +63,7 @@ test("[ilucca presence] should tell month and year", (t) => {
 test("[ilucca presence] should count presence days map", (t) => {
   t.assert.deepEqual(
     Object.fromEntries(
-      getMonthPresenceDaysMap(dummyPlannignHtmlTable13DaysPresence)
+      new IluccaPlanning(dummyPlannignHtmlTable13DaysPresence).getMonthPresenceDaysMap()
     ),
     {
       "2024-11-1": 0,
@@ -108,7 +104,7 @@ test("[ilucca presence] should count presence days map", (t) => {
 test("[ilucca presence] should return days map with half day off", (t) => {
   t.assert.deepEqual(
     Object.fromEntries(
-      getMonthPresenceDaysMap(dummyPlannignHtmlTableWith17Point5Days)
+      new IluccaPlanning(dummyPlannignHtmlTableWith17Point5Days).getMonthPresenceDaysMap()
     ),
     {
       "2023-11-1": 0,
