@@ -1404,14 +1404,41 @@ export const countPresenceDays = (planningHtml) => {
   return presenceDaysCount / 2;
 };
 
-
 export const getCurrentMonthAndYearFromPlanning = (planningHtml) => {
   const $ = cheerio.load(planningHtml);
   const currentMonthRow = $("tr[mois]").first();
   const monthName = currentMonthRow.find("td.mois").text().split(" ")[0];
   const year = currentMonthRow.attr("annee");
+  const month = currentMonthRow.attr("mois");
   return {
     monthName,
     year,
+    month,
   };
-}
+};
+
+export const getMonthPresenceDaysMap = (planningHtml) => {
+  const $ = cheerio.load(planningHtml);
+  const monthPresenceDaysMap = new Map();
+  const currentMonthRow = $("tr[mois]").first();
+  const { month, year } = getCurrentMonthAndYearFromPlanning(planningHtml);
+  let day = 0;
+  currentMonthRow.find("td.jour").each((_, element) => {
+    const dayCell = $(element);
+    day++;
+    let presenceCount = 0;
+    dayCell.find("div > div").each((_, div) => {
+      const dataDemand = $(div).attr("data-demande");
+      const title = $(div).attr("title") || "";
+      if (
+        dataDemand !== "-1" &&
+        (title.includes("travail") || title.includes("site"))
+      ) {
+        presenceCount += 0.5;
+      }
+    });
+    monthPresenceDaysMap.set(`${year}-${month}-${day}`, presenceCount);
+  });
+
+  return monthPresenceDaysMap;
+};
