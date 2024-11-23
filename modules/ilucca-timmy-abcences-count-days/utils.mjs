@@ -1403,3 +1403,15 @@ export const countPresenceDays = (planningHtml) => {
 
   return presenceDaysCount / 2;
 };
+
+
+export const getCurrentMonthAndYearFromPlanning = (planningHtml) => {
+  const $ = cheerio.load(planningHtml);
+  const currentMonthRow = $("tr[mois]").first();
+  const monthName = currentMonthRow.find("td.mois").text().split(" ")[0];
+  const year = currentMonthRow.attr("annee");
+  return {
+    monthName,
+    year,
+  };
+}
