@@ -1,6 +1,6 @@
 import { chromium } from "playwright";
 import { config } from "dotenv";
-import { countPresenceDays } from "./utils.mjs";
+import { IluccaPlanning } from "./ilucca-planning.mjs";
 config();
 
 (async () => {
@@ -23,8 +23,8 @@ config();
   await page.getByRole("link", { name: "Timmi Absences" }).click();
   const response = await responsePromise;
   const responseJson = await response.json(); 
-  const presenceDays = countPresenceDays(responseJson.planning);
-  console.log(`prensece days : ${presenceDays}`);
+  const planning = new IluccaPlanning(responseJson.planning);
+  console.log(`prensece days : ${planning.countPresenceDays()}`);
 
   // ---------------------
   await context.close();
