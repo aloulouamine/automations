@@ -42,9 +42,11 @@ export class IluccaPlanning {
   getMonthPresenceDaysMap() {
     const monthPresenceDaysMap = new Map();
     const { month, year } = this.getCurrentMonthAndYearFromPlanning();
+    const daysInMonth = new Date(year, parseInt(month), 0).getDate();
     let day = 0;
     this.#walkThroughDayCells((dayCell) => {
       day++;
+      if (day > daysInMonth) return; // Stop if day exceeds the number of days in the month
       let presenceCount = 0;
       dayCell.find("div > div").each((_, div) => {
         const dataDemand = this.$(div).attr("data-demande");

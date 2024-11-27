@@ -96,7 +96,6 @@ test("[ilucca presence] should count presence days map", (t) => {
       "2024-11-28": 0,
       "2024-11-29": 0,
       "2024-11-30": 0,
-      "2024-11-31": 0,
     }
   );
 });
@@ -137,7 +136,6 @@ test("[ilucca presence] should return days map with half day off", (t) => {
       "2023-11-28": 1,
       "2023-11-29": 1,
       "2023-11-30": 1,
-      "2023-11-31": 0,  
     }
   );
 });
