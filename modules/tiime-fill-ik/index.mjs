@@ -7,8 +7,12 @@ config();
 (async () => {
   const browser = await chromium.launch({
     headless: false,
+    
   });
-  const context = await browser.newContext();
+  const context = await browser.newContext({
+    locale: "fr-FR",
+  });
+
   const page = await context.newPage();
   await page.goto("https://apps.tiime.fr/signin");
   await page.getByPlaceholder("Adresse mail").click();
@@ -20,10 +24,9 @@ config();
   await page.getByText("Dépenses").click();
   await page.getByRole("link", { name: "Frais kilométriques" }).click();
   await page.getByRole("button", { name: "Ajouter un trajet" }).click();
-  await page.getByPlaceholder("Adresse", { exact: true }).click();
-  await page.getByText("Trajet du : 27/11/2024 Propri").click();
-  await page.getByPlaceholder("Nom de l'entreprise (").click();
+  await page.getByPlaceholder("Nom de l'entreprise (facultatif)").click();
   await page.getByText("Valiuz").click();
+  await page.waitForTimeout(1000);
   await page.getByLabel("Aller / Retour").check();
   await page.locator("tiime-chip path").click();
   await page.locator("mat-chip-set div").first().click();
@@ -37,14 +40,9 @@ config();
     await page.getByLabel(formatDateToTiimeCalendarLabel(day), { exact: true }).click();
   }
   await page.getByRole("button", { name: "Valider" }).click();
+  await page.waitForTimeout(1000);
   await page.getByRole("button", { name: "Enregistrer" }).click();
-  await page
-    .locator("app-mileage-allowances-actions")
-    .getByRole("button")
-    .click();
-  await page.locator(".cdk-overlay-backdrop").click();
-  await page.getByText("Actions", { exact: true }).click();
-
+  await page.waitForTimeout(3000);
   // ---------------------
   await context.close();
   await browser.close();
