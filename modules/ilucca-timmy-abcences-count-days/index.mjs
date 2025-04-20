@@ -22,7 +22,7 @@ config();
 
   const responsePromise = page.waitForResponse(`**/DemandePlanning.ashx**`);
 
-  await page.getByRole("link", { name: "Timmi Absences" }).click();
+  await page.getByRole("link", { name: "Absences" }).click();
   const response = await responsePromise;
   const responseJson = await response.json();
   const planning = new IluccaPlanning(responseJson.planning);
