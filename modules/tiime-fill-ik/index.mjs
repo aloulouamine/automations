@@ -14,15 +14,13 @@ config();
   });
 
   const page = await context.newPage();
-  await page.goto("https://apps.tiime.fr/signin");
+  await page.goto("https://apps.tiime.fr/companies/180235/expense/mileage-allowances");
   await page.getByPlaceholder("Adresse mail").click();
   await page.getByPlaceholder("Adresse mail").fill(process.env.TIIME_LOGIN);
   await page.getByPlaceholder("Mot de passe").click();
   await page.getByPlaceholder("Mot de passe").fill(process.env.TIIME_PASSWORD);
   await page.getByPlaceholder("Mot de passe").press("Enter");
   await page.getByRole("button", { name: "Je me connecte" }).click();
-  await page.getByText("Dépenses").click();
-  await page.getByRole("link", { name: "Frais kilométriques" }).click();
   await page.getByRole("button", { name: "Ajouter un trajet" }).click();
   await page.getByPlaceholder("Nom de l'entreprise (facultatif)").click();
   await page.getByText("Valiuz").click();
