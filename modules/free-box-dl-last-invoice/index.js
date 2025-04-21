@@ -30,7 +30,7 @@ require('dotenv').config();
   
   // @todo save to a specific folder
   await download.saveAs(
-    "./output/" + download.suggestedFilename()
+    "./output/invoice.pdf"
   );
   await page.close()
   await browser.close();
