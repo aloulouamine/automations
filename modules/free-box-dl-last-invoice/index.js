@@ -20,6 +20,13 @@ require('dotenv').config();
     "#widget_mesfactures > div.widget_content > div > ul > li:nth-child(1) > a"
   );
   const download = await downloadPromise;
+
+  // Ensure the output directory exists
+  const outputDir = './output';
+  if (!existsSync(outputDir)) {
+    mkdirSync(outputDir);
+  }  
+  
   // @todo save to a specific folder
   await download.saveAs(
     "./output/" + download.suggestedFilename()
