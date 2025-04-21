@@ -1,4 +1,5 @@
 const { chromium } = require('playwright');
+const { existsSync, mkdirSync } = require('fs');
 
 // dotenv
 require('dotenv').config();
